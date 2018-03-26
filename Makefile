@@ -12,3 +12,14 @@ PANDOCOPTS = --template template/template.html \
 .PHONY: clean
 clean:
 	rm -f *.html
+
+.PHONY: publish
+publish: all
+	git branch -D gh-pages || :
+	git checkout --orphan gh-pages
+	git reset
+	git add -f *.html
+	git commit -m .
+	git push -f origin gh-pages
+	git clean -xdf
+	git checkout master
